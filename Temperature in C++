@@ -1,0 +1,79 @@
+                                                              //PART 1 INITIAL TEMPERATURE CONVERSION:
+
+#include <iostream>
+#include <string>
+int main()
+{
+std::string temperature;
+std::cout << "Please enter a temperature. ";
+std::cin >> temperature;
+    
+float fl_temperature = std::stof(temperature);
+float celsius = (fl_temperature-32)/1.8;
+    
+std::cout << "Converted to Celsius, this temperature is " << celsius << "!\n";
+}
+
+
+                                                          //PART 2 IMPLEMENTATION WITH METHODS AND CLASSES:
+
+#include <iostream>
+#include <string>
+
+class Converter{
+    public:
+    float fromFtoC(float fl_temperature){
+        float celsius = (fl_temperature-32)/1.8; // f to c conversion
+        return celsius;
+        }
+};
+
+int main()
+{
+    std::string temperature;
+    std::cout << "Please enter a temperature. ";
+    std::cin >> temperature;    //input a string 'temperature'
+    float fl_temperature = std::stof(temperature); //float of temperature
+
+    Converter c; // Create object of Converter
+    std::cout << "Converted to Celsius, this temperature is " << c.fromFtoC(fl_temperature) << "!\n"; //call the method with an argument
+    return 0;
+}
+
+                                                          //PART 3 IMPLEMENTATION WITH SINGLETON PATTERN
+
+#include <iostream>
+#include <string>
+
+class Converter
+{
+    private:
+    Converter(); // Private constructor so that multiple instances cannot be created.
+    static Converter* instance; //Initialize pointer so that it can be initialized in first call to getInstance
+    
+    public:
+    static Converter* getInstance()
+    {
+        return instance;
+    };
+        ~Converter(); //release rescources allocated to Converter
+    
+    // f to c conversion
+    float fromFtoC(float fl_temperature)
+    {
+        float celsius = (fl_temperature-32)/1.8; 
+        return celsius;
+    }
+};
+    
+int main()
+{
+    std::string temperature;
+    std::cout << "Please enter a temperature. ";
+    std::cin >> temperature;    //input a string 'temperature'
+    float fl_temperature = std::stof(temperature); //float of temperature
+    
+    Converter *c = Converter::getInstance(); //grab instance
+    std::cout << "Converted to Celsius, this temperature is " << c->fromFtoC(fl_temperature) << "!\n"; //call the method with an argument
+    return 0;
+}
